@@ -5,7 +5,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SpringJoint))]
 public class ArmMover : MonoBehaviour
 {
-    [SerializeField] private HingeJoint _hingeJount;
+    [SerializeField] private HingeJoint _hingeJoint;
     [SerializeField] private SpringJoint _springJoint;
 
     [SerializeField] private float _pullDownForce = 450;
@@ -23,24 +23,24 @@ public class ArmMover : MonoBehaviour
     private void Awake()
     {
         _springJoint = GetComponent<SpringJoint>();
-        _hingeJount = GetComponent<HingeJoint>();
+        _hingeJoint = GetComponent<HingeJoint>();
 
-        _jointMotor = _hingeJount.motor;
-        _jointLimits = _hingeJount.limits;
+        _jointMotor = _hingeJoint.motor;
+        _jointLimits = _hingeJoint.limits;
         _jointLimits.max = _shootAngle;
         
-        _hingeJount.useLimits = true;
+        _hingeJoint.useLimits = true;
     }
 
     private void Update()
     {
-        if (_hingeJount.angle <= _loadAngle)
+        if (_hingeJoint.angle <= _loadAngle)
             ReadyToRelease?.Invoke();
     }
 
     public void Release()
     {
-        _hingeJount.useMotor = false;
+        _hingeJoint.useMotor = false;
     }
 
     public void PullDown()
@@ -50,6 +50,6 @@ public class ArmMover : MonoBehaviour
         _jointLimits.min = _loadAngle;
 
         _springJoint.spring = _shootForce;
-        _hingeJount.useMotor = true;
+        _hingeJoint.useMotor = true;
     }
 }
